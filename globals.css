@@ -1,0 +1,161 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 210 40% 98%;
+    --foreground: 215 49% 11%;
+    --card: 0 0% 100%;
+    --card-foreground: 215 49% 11%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 215 49% 11%;
+    --primary: 192 100% 50%;
+    --primary-foreground: 215 49% 11%;
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 215 49% 11%;
+    --muted: 215 10% 47%;
+    --muted-foreground: 215 10% 47%;
+    --accent: 192 100% 97%;
+    --accent-foreground: 192 100% 50%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 210 40% 80%; /* Made border slightly more visible for glass effect */
+    --input: 210 40% 90%;
+    --ring: 192 100% 50%;
+    --radius: 0.75rem; /* Slightly larger radius for a softer look */
+    --chart-1: 192 100% 50%; /* Cyan */
+    --chart-2: 38 96% 55%;  /* Orange for HRV */
+    --chart-3: 160 80% 47%; /* Green */
+    --chart-4: 45 96% 56%;  /* Amber */
+    --chart-5: 0 84% 60%;   /* Red */
+
+    /* Custom Health Status Colors */
+    --health-normal: 120 60% 45%;
+    --health-warning: 45 96% 56%;
+    --health-critical: 0 84% 60%;
+  }
+
+  .dark {
+    --background: 219 68% 9%;
+    --foreground: 213 44% 94%;
+    --card: 215 49% 14%; /* Slightly lighter than background */
+    --card-foreground: 213 44% 94%;
+    --popover: 215 49% 11%;
+    --popover-foreground: 213 44% 94%;
+    --primary: 192 100% 50%;
+    --primary-foreground: 215 49% 11%;
+    --secondary: 215 28% 17%;
+    --secondary-foreground: 213 44% 94%;
+    --muted: 215 25% 65%;
+    --muted-foreground: 215 25% 65%;
+    --accent: 215 28% 17%;
+    --accent-foreground: 192 100% 50%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 215 28% 25%; /* Made border slightly more visible for glass effect */
+    --input: 215 28% 17%;
+    --ring: 192 100% 50%;
+    --chart-1: 192 100% 50%; /* Cyan */
+    --chart-2: 38 96% 55%;  /* Orange for HRV */
+    --chart-3: 160 80% 47%; /* Green */
+    --chart-4: 45 96% 56%;  /* Amber */
+    --chart-5: 0 72% 51%;   /* Red */
+
+    /* Custom Health Status Colors */
+    --health-normal: 120 70% 55%;
+    --health-warning: 45 96% 56%;
+    --health-critical: 0 72% 51%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    background-image: linear-gradient(to bottom right, hsl(var(--primary) / 0.1), hsl(var(--background)), hsl(var(--accent) / 0.1));
+    background-attachment: fixed;
+  }
+  .text-health-normal {
+    color: hsl(var(--health-normal));
+  }
+  .text-health-warning {
+      color: hsl(var(--health-warning));
+  }
+  .text-health-critical {
+      color: hsl(var(--health-critical));
+  }
+}
+
+@layer utilities {
+  .text-glow {
+    animation-name: text-glow-anim;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+  }
+
+  @keyframes text-glow-anim {
+    0%, 100% {
+      text-shadow: 0 0 4px var(--glow-color), 0 0 6px var(--glow-color);
+    }
+    50% {
+      text-shadow: 0 0 8px var(--glow-color), 0 0 12px var(--glow-color);
+    }
+  }
+
+  /* A more realistic heart beat animation using multiple transforms */
+  @keyframes heart-pulse {
+    0% {
+      transform: scale(1);
+    }
+    30% {
+      transform: scale(1.05);
+    }
+    50% {
+      transform: scale(1.08);
+    }
+    70% {
+      transform: scale(1.02);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+
+  .animate-heart-pulse {
+    animation-name: heart-pulse;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+    animation-duration: var(--animation-duration, 1s);
+  }
+}
+
+.loading-bar {
+  position: relative;
+  width: 100%;
+  height: 1px;
+  background-color: transparent;
+  overflow: hidden;
+}
+
+.loading-bar::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to right, transparent, hsl(var(--primary)), transparent);
+  animation: loading-anim 2s linear infinite;
+}
+
+@keyframes loading-anim {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
